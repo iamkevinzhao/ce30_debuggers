@@ -17,7 +17,8 @@ MainWindow::MainWindow(QWidget *parent) :
   ui->setupUi(this);
   SetUISocketOptionUDP();
   SetSocketFromUI();
-  socket_.reset(new UDPSocket);
+  text_sender_.reset(new TextSender);
+  text_sender_->SetUITextEdit(ui->SenderPlainTextEdit);
 }
 
 MainWindow::~MainWindow()
@@ -43,8 +44,10 @@ void MainWindow::SetSocketFromUI() {
         "UDP socket is currently not supported.", QMessageBox::Ok);
     SetUISocketOptionUDP();
     socket_.reset(new UDPSocket);
+    socket_->Initialize();
   } else if (ui->UDPCheckBox->isChecked()) {
     socket_.reset(new UDPSocket);
+    socket_->Initialize();
   } else {
     QMessageBox::critical(
         this, kErrorDialogTitle,
@@ -52,6 +55,7 @@ void MainWindow::SetSocketFromUI() {
         QMessageBox::Ok);
     SetUISocketOptionUDP();
     socket_.reset(new UDPSocket);
+    socket_->Initialize();
   }
 }
 
@@ -73,5 +77,5 @@ void MainWindow::on_SendPushButton_clicked()
     cerr << "No socket has been established." << endl;
     QApplication::exit(-1);
   }
-  socket_->Test();
+  socket_->Send(text_sender_->GetMessageString());
 }

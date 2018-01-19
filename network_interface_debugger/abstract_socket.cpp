@@ -4,3 +4,5 @@ AbstractSocket::AbstractSocket()
 {
 
 }
+
+AbstractSocket::~AbstractSocket() {}

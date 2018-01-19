@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "abstract_socket.h"
 #include <memory>
+#include "text_sender.h"
 
 namespace Ui {
   class MainWindow;
@@ -30,6 +31,7 @@ private:
   void SetUISocketOptionUDP();
   Ui::MainWindow *ui;
   std::shared_ptr<AbstractSocket> socket_;
+  std::shared_ptr<TextSender> text_sender_;
 };
 
 #endif // MAIN_WINDOW_H
