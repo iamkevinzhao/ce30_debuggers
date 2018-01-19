@@ -3,7 +3,8 @@
 
 using namespace std;
 
-UDPSocket::UDPSocket() : address_("192.168.1.80"), port_(2368)
+UDPSocket::UDPSocket()
+  : exit_signal_(false), address_("192.168.1.80"), port_(2368)
 {
 
 }
