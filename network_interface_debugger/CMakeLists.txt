@@ -8,6 +8,10 @@ add_executable(
     main_window.h
     main_window.cpp
     main_window.ui
+    abstract_socket.h
+    abstract_socket.cpp
+    udp_socket.h
+    udp_socket.cpp
 )
 
 target_link_libraries(
