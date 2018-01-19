@@ -19,11 +19,28 @@ MainWindow::MainWindow(QWidget *parent) :
   SetSocketFromUI();
   text_sender_.reset(new TextSender);
   text_sender_->SetUITextEdit(ui->SenderPlainTextEdit);
+  timer_id_ = startTimer(100);
 }
 
 MainWindow::~MainWindow()
 {
   delete ui;
+}
+
+void MainWindow::timerEvent(QTimerEvent *event) {
+  if (event->timerId() == timer_id_) {
+    auto reports = socket_->AsyncReceive();
+    if (reports.empty()) {
+      return;
+    }
+    for (auto& report : reports) {
+      ui->ReceiverPlainTextEdit->appendPlainText(
+          QString::number(report.stamp.hour()) + ":" +
+          QString::number(report.stamp.minute()) + ":" +
+          QString::number(report.stamp.second()) + ":" +
+          QString::number(report.stamp.msec()) + " " + report.message);
+    }
+  }
 }
 
 void MainWindow::SetUISocketOptionTCP() {

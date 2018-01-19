@@ -72,13 +72,11 @@ void UDPSocket::InterfaceThread() {
       quint16 port;
       socket_->readDatagram(
             report.message.data(), report.message.size(), &address, &port);
-      // qDebug() << report.message;
       report.stamp = QTime::currentTime();
       if (address == address_ || port == port_) {
         receive_datagrams_.push_back(report);
       }
     }
     receive_datagrams_mutex_.unlock();
-    this_thread::sleep_for(std::chrono::microseconds(10));
   }
 }
