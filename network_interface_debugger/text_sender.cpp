@@ -22,8 +22,7 @@ QString TextSender::GetMessageString() {
   for (auto& ch : line_string) {
     if (ch == ']') {
       bool ok;
-      // qDebug() << hex.toInt(&ok, 16);
-      string.append(char(hex.toInt(&ok, 16)));
+      string.append(unsigned char(hex.toInt(&ok, 16)));
       hex.clear();
     } else if (ch == '[') {
       hex.append("0x");
@@ -33,7 +32,6 @@ QString TextSender::GetMessageString() {
       string.append(ch);
     }
   }
-  // qDebug() << string[0].;
   return string;
 }
 
