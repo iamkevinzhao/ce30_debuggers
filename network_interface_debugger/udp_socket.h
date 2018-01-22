@@ -14,7 +14,6 @@ public:
   UDPSocket();
   ~UDPSocket();
   bool Initialize() override;
-  void Test() override;
   MessageReport Send(const QString& message) override;
   std::vector<MessageReport> AsyncReceive() override;
 private:

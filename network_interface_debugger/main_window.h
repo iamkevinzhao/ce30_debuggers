@@ -5,6 +5,7 @@
 #include "abstract_socket.h"
 #include <memory>
 #include "text_sender.h"
+#include "text_receiver.h"
 
 namespace Ui {
   class MainWindow;
@@ -28,6 +29,10 @@ private slots:
 
   void on_SendPushButton_clicked();
 
+  void on_WrapMessageCheckBox_clicked(bool checked);
+
+  void on_WrapMessagePushButton_clicked();
+
 private:
   void SetSocketFromUI();
   void SetUISocketOptionTCP();
@@ -35,6 +40,7 @@ private:
   Ui::MainWindow *ui;
   std::shared_ptr<AbstractSocket> socket_;
   std::shared_ptr<TextSender> text_sender_;
+  std::shared_ptr<TextReceiver> text_receiver_;
   int timer_id_;
 };
 

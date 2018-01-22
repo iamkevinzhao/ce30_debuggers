@@ -17,7 +17,6 @@ public:
   AbstractSocket();
   virtual ~AbstractSocket();
   virtual bool Initialize() = 0;
-  virtual void Test() = 0;
   virtual MessageReport Send(const QString& message) = 0;
   virtual std::vector<MessageReport> AsyncReceive() = 0;
 };

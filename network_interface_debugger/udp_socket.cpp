@@ -21,13 +21,9 @@ bool UDPSocket::Initialize() {
   return true;
 }
 
-void UDPSocket::Test() {
-  qDebug() << "UDPSocket";
-}
-
 MessageReport UDPSocket::Send(const QString &message) {
   MessageReport report;
-  report.message = message.toUtf8();
+  report.message = message.toLocal8Bit();
   report.stamp = QTime::currentTime();
   unique_lock<mutex> lock(send_datagram_mutex_);
   send_datagram_.message = message.toUtf8();
@@ -53,9 +49,6 @@ void UDPSocket::InterfaceThread() {
     send_datagram_mutex_.lock();
     if (send_datagram_.message.size()) {
       send_datagram_.stamp = QTime::currentTime();
-//      for (int i = 0; i < 43; ++i) {
-//        send_datagram_.message.append(char(0));
-//      }
       socket_->writeDatagram(send_datagram_.message, address_, port_);
       send_datagram_.message.clear();
     }
