@@ -8,7 +8,7 @@ The `ce30_debuggers` provides a set of tools to help developers manually interac
 
 #### Version
 
-- 1.0.0
+- 1.0.1
 
 #### Dependencies
 
@@ -21,7 +21,7 @@ The `ce30_debuggers` provides a set of tools to help developers manually interac
 
 #### Download
 
-- [CE30 Network Interface Debugger](https://github.com/codincodee/ce30_debuggers/releases/download/v1.0.0/ce30_network_interface_debugger_v1_0_0_win10_64bit.zip)
+- [CE30 Network Interface Debugger](https://github.com/codincodee/ce30_debuggers/releases/download/v1.0.0/ce30_network_interface_debugger_v1_0_1_win10_64bit.zip)
 
 #### Quick Access
 
