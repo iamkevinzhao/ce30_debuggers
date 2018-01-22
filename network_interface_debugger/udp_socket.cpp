@@ -23,7 +23,7 @@ bool UDPSocket::Initialize() {
 
 MessageReport UDPSocket::Send(const QString &message) {
   MessageReport report;
-  report.message = message.toUtf8();
+  report.message = message.toLocal8Bit();
   report.stamp = QTime::currentTime();
   unique_lock<mutex> lock(send_datagram_mutex_);
   send_datagram_.message = message.toUtf8();

@@ -1,4 +1,5 @@
 #include "text_sender.h"
+#include <QDebug>
 
 TextSender::TextSender()
   : alway_wrap_on_(false), bytes_wrap_to_(50)
@@ -14,8 +15,25 @@ QString TextSender::GetMessageString() {
   if (alway_wrap_on_) {
     WrapMessageNow();
   }
-  auto string = line_edit_->text();
+  auto line_string = line_edit_->text();
   line_edit_->clear();
+  QString string, hex;
+  string.reserve(line_string.size());
+  for (auto& ch : line_string) {
+    if (ch == ']') {
+      bool ok;
+      // qDebug() << hex.toInt(&ok, 16);
+      string.append(char(hex.toInt(&ok, 16)));
+      hex.clear();
+    } else if (ch == '[') {
+      hex.append("0x");
+    } else if (!hex.isEmpty()) {
+      hex.append(ch);
+    } else {
+      string.append(ch);
+    }
+  }
+  // qDebug() << string[0].;
   return string;
 }
 
