@@ -4,6 +4,7 @@
 #include "udp_socket.h"
 #include <QMessageBox>
 #include <iostream>
+#include <QThread>
 
 using namespace std;
 
@@ -54,7 +55,7 @@ void MainWindow::SetUISocketOptionUDP() {
 }
 
 void MainWindow::SetSocketFromUI() {
-  socket_.reset();
+  // socket_.reset();
   if (ui->TCPCheckBox->isChecked()) {
     QMessageBox::information(
         this, kWarnDialogTitle,
