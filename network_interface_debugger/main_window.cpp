@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
   SetSocketFromUI();
   text_sender_.reset(new TextSender);
   text_sender_->SetUITextEdit(ui->SenderPlainTextEdit);
+  text_receiver_.reset(new TextReceiver);
+  text_receiver_->SetUITextEdit(ui->ReceiverPlainTextEdit);
   timer_id_ = startTimer(100);
 }
 
@@ -35,11 +37,7 @@ void MainWindow::timerEvent(QTimerEvent *event) {
       return;
     }
     for (auto& report : reports) {
-      ui->ReceiverPlainTextEdit->appendPlainText(
-          QString::number(report.stamp.hour()) + ":" +
-          QString::number(report.stamp.minute()) + ":" +
-          QString::number(report.stamp.second()) + ":" +
-          QString::number(report.stamp.msec()) + " " + report.message);
+      text_receiver_->DisplayMessageReport(report, TextType::received);
     }
   }
 }
@@ -95,5 +93,6 @@ void MainWindow::on_SendPushButton_clicked()
     cerr << "No socket has been established." << endl;
     QApplication::exit(-1);
   }
-  socket_->Send(text_sender_->GetMessageString());
+  text_receiver_->DisplayMessageReport(
+      socket_->Send(text_sender_->GetMessageString()), TextType::sent);
 }

@@ -16,6 +16,8 @@ add_executable(
     udp_socket.cpp
     text_sender.h
     text_sender.cpp
+    text_receiver.h
+    text_receiver.cpp
 )
 
 target_link_libraries(

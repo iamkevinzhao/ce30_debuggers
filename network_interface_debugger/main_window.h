@@ -5,6 +5,7 @@
 #include "abstract_socket.h"
 #include <memory>
 #include "text_sender.h"
+#include "text_receiver.h"
 
 namespace Ui {
   class MainWindow;
@@ -35,6 +36,7 @@ private:
   Ui::MainWindow *ui;
   std::shared_ptr<AbstractSocket> socket_;
   std::shared_ptr<TextSender> text_sender_;
+  std::shared_ptr<TextReceiver> text_receiver_;
   int timer_id_;
 };
 
