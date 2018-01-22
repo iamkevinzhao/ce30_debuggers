@@ -29,6 +29,10 @@ private slots:
 
   void on_SendPushButton_clicked();
 
+  void on_WrapMessageCheckBox_clicked(bool checked);
+
+  void on_WrapMessagePushButton_clicked();
+
 private:
   void SetSocketFromUI();
   void SetUISocketOptionTCP();

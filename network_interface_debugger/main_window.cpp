@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
   SetSocketFromUI();
   text_sender_.reset(new TextSender);
   text_sender_->SetUITextEdit(ui->SenderPlainTextEdit);
+  text_sender_->SetUILineEdit(ui->SenderLineEdit);
+  text_sender_->SetMessageWrapFlag(ui->WrapMessageCheckBox->isChecked());
   text_receiver_.reset(new TextReceiver);
   text_receiver_->SetUITextEdit(ui->ReceiverPlainTextEdit);
   timer_id_ = startTimer(100);
@@ -37,7 +39,7 @@ void MainWindow::timerEvent(QTimerEvent *event) {
       return;
     }
     for (auto& report : reports) {
-      text_receiver_->DisplayMessageReport(report, TextType::received);
+      text_receiver_->DisplayMessageReport(report);
     }
   }
 }
@@ -94,5 +96,16 @@ void MainWindow::on_SendPushButton_clicked()
     QApplication::exit(-1);
   }
   text_sender_->DisplayMessageReport(
-      socket_->Send(text_sender_->GetMessageString()), TextType::sent);
+      socket_->Send(text_sender_->GetMessageString()));
+}
+
+void MainWindow::on_WrapMessageCheckBox_clicked(bool checked)
+{
+  text_sender_->SetMessageWrapFlag(checked);
+  ui->WrapMessagePushButton->setDisabled(checked);
+}
+
+void MainWindow::on_WrapMessagePushButton_clicked()
+{
+  text_sender_->WrapMessageNow();
 }
