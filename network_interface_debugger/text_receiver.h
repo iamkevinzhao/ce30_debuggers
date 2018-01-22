@@ -3,20 +3,12 @@
 
 #include <QPlainTextEdit>
 #include "abstract_socket.h"
+#include "text_display.h"
 
-enum class TextType {
-  received, sent, unknown,
-};
-
-class TextReceiver
+class TextReceiver : public TextDisplay
 {
 public:
   TextReceiver();
-  void SetUITextEdit(QPlainTextEdit* ui_text_edit);
-  void DisplayMessageReport(
-      const MessageReport& report, const TextType& type = TextType::received);
-private:
-  QPlainTextEdit* ui_text_edit_;
 };
 
 #endif // TEXT_RECEIVER_H

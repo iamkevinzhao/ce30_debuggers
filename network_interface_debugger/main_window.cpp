@@ -93,6 +93,6 @@ void MainWindow::on_SendPushButton_clicked()
     cerr << "No socket has been established." << endl;
     QApplication::exit(-1);
   }
-  text_receiver_->DisplayMessageReport(
+  text_sender_->DisplayMessageReport(
       socket_->Send(text_sender_->GetMessageString()), TextType::sent);
 }
