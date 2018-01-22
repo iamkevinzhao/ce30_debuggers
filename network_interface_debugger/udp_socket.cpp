@@ -11,7 +11,7 @@ UDPSocket::UDPSocket()
 
 UDPSocket::~UDPSocket() {
   exit_signal_ = true;
-  if (thread_->joinable()) {
+  if (thread_ && thread_->joinable()) {
     thread_->join();
   }
 }
@@ -53,10 +53,9 @@ void UDPSocket::InterfaceThread() {
     send_datagram_mutex_.lock();
     if (send_datagram_.message.size()) {
       send_datagram_.stamp = QTime::currentTime();
-      for (int i = 0; i < 43; ++i) {
-        send_datagram_.message.append(char(0));
-      }
-      qDebug() << send_datagram_.message.size();
+//      for (int i = 0; i < 43; ++i) {
+//        send_datagram_.message.append(char(0));
+//      }
       socket_->writeDatagram(send_datagram_.message, address_, port_);
       send_datagram_.message.clear();
     }
