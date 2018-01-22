@@ -5,7 +5,7 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt5Network REQUIRED)
 
 add_executable(
-  ce30_testing_assistant
+  ce30_network_interface_debugger
     main.cpp
     main_window.h
     main_window.cpp
@@ -23,10 +23,10 @@ add_executable(
 )
 
 target_link_libraries(
-  ce30_testing_assistant
+  ce30_network_interface_debugger
     Qt5::Widgets
     Qt5::Network
 )
 
-install(TARGETS ce30_testing_assistant
+install(TARGETS ce30_network_interface_debugger
   RUNTIME DESTINATION bin)

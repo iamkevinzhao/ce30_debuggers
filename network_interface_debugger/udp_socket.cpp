@@ -26,7 +26,7 @@ MessageReport UDPSocket::Send(const QString &message) {
   report.message = message.toLocal8Bit();
   report.stamp = QTime::currentTime();
   unique_lock<mutex> lock(send_datagram_mutex_);
-  send_datagram_.message = message.toUtf8();
+  send_datagram_.message = message.toLocal8Bit();
   lock.unlock();
   return report;
 }
