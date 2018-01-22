@@ -12,9 +12,6 @@ void TextSender::SetUILineEdit(QLineEdit *line_edit) {
 }
 
 QString TextSender::GetMessageString() {
-  if (alway_wrap_on_) {
-    WrapMessageNow();
-  }
   auto line_string = line_edit_->text();
   line_edit_->clear();
   QString string, hex;
@@ -31,6 +28,9 @@ QString TextSender::GetMessageString() {
     } else {
       string.append(ch);
     }
+  }
+  if (alway_wrap_on_) {
+    WrapMessageNow();
   }
   return string;
 }
