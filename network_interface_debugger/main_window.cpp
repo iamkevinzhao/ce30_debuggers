@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <iostream>
 #include <QThread>
+#include "tcp_socket.h"
 
 using namespace std;
 
@@ -57,11 +58,7 @@ void MainWindow::SetUISocketOptionUDP() {
 void MainWindow::SetSocketFromUI() {
   // socket_.reset();
   if (ui->TCPCheckBox->isChecked()) {
-    QMessageBox::information(
-        this, kWarnDialogTitle,
-        "UDP socket is currently not supported.", QMessageBox::Ok);
-    SetUISocketOptionUDP();
-    socket_.reset(new UDPSocket);
+    socket_.reset(new TCPSocket);
     socket_->Initialize();
   } else if (ui->UDPCheckBox->isChecked()) {
     socket_.reset(new UDPSocket);
