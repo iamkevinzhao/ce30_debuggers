@@ -14,6 +14,8 @@ add_executable(
     abstract_socket.cpp
     udp_socket.h
     udp_socket.cpp
+    tcp_socket.h
+    tcp_socket.cpp
     text_sender.h
     text_sender.cpp
     text_receiver.h
