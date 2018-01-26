@@ -12,12 +12,16 @@ AsyncNetworkServer::AsyncNetworkServer()
 }
 
 AsyncNetworkServer::~AsyncNetworkServer() {
+}
+
+bool AsyncNetworkServer::Shut() {
   exit_signal_ = true;
   if (thread_) {
     if (thread_->joinable()) {
       thread_->join();
     }
   }
+  return true;
 }
 
 bool AsyncNetworkServer::Initialize() {
@@ -68,7 +72,7 @@ void AsyncNetworkServer::BackgroudThread() {
 
     report_queue_in_mutex_.lock();
     MessageReport report;
-    if (SocketReceive(report)) {
+    while (SocketReceive(report)) {
       report_queue_in_.emplace(report);
     }
     report_queue_in_mutex_.unlock();

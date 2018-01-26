@@ -15,6 +15,7 @@ public:
   bool Initialize() override;
   MessageReport AsyncSend(const QString& message) override;
   std::vector<MessageReport> AsyncReceive() override;
+  bool Shut() override;
 protected:
   virtual bool InitializeSocket() = 0;
   virtual bool SocketSend(const MessageReport& report) = 0;

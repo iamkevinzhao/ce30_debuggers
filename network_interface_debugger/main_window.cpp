@@ -30,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+  if (socket_) {
+    socket_->Shut();
+  }
   delete ui;
 }
 
@@ -58,9 +61,15 @@ void MainWindow::SetUISocketOptionUDP() {
 void MainWindow::SetSocketFromUI() {
   // socket_.reset();
   if (ui->TCPCheckBox->isChecked()) {
-    socket_.reset(new TCPSocket);
+    if (socket_) {
+      socket_->Shut();
+    }
+    socket_.reset(new UDPSocket);
     socket_->Initialize();
   } else if (ui->UDPCheckBox->isChecked()) {
+    if (socket_) {
+      socket_->Shut();
+    }
     socket_.reset(new UDPSocket);
     socket_->Initialize();
   } else {
@@ -69,6 +78,9 @@ void MainWindow::SetSocketFromUI() {
         "Neither UDP nor TCP is selected, setting UDP socket as default.",
         QMessageBox::Ok);
     SetUISocketOptionUDP();
+    if (socket_) {
+      socket_->Shut();
+    }
     socket_.reset(new UDPSocket);
     socket_->Initialize();
   }

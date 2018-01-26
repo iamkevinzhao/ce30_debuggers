@@ -19,6 +19,7 @@ public:
   virtual bool Initialize() = 0;
   virtual MessageReport AsyncSend(const QString& message) = 0;
   virtual std::vector<MessageReport> AsyncReceive() = 0;
+  virtual bool Shut() = 0;
 };
 
 #endif // ABSTRACT_SOCKET_H
