@@ -8,7 +8,7 @@ AsyncNetworkServer::AsyncNetworkServer()
   : exit_signal_(false),
     report_queue_in_max_(1000)
 {
-
+  SetInMessageEnqueueJudgeToDefault();
 }
 
 AsyncNetworkServer::~AsyncNetworkServer() {
@@ -21,6 +21,19 @@ bool AsyncNetworkServer::Shut() {
       thread_->join();
     }
   }
+  return true;
+}
+
+bool AsyncNetworkServer::SetInMessageEnqueueJudgeToDefault() {
+  return
+      SetInMessageEnqueueJudge([](const MessageReport& report){return true;});
+}
+
+bool AsyncNetworkServer::SetInMessageEnqueueJudge(
+    std::function<bool (const MessageReport &)> func) {
+  report_queue_in_mutex_.lock();
+  in_message_enqueue_judge_ = func;
+  report_queue_in_mutex_.unlock();
   return true;
 }
 
@@ -73,6 +86,9 @@ void AsyncNetworkServer::BackgroudThread() {
     report_queue_in_mutex_.lock();
     MessageReport report;
     while (SocketReceive(report)) {
+      if (!in_message_enqueue_judge_(report)) {
+        continue;
+      }
       report_queue_in_.emplace(report);
     }
     report_queue_in_mutex_.unlock();

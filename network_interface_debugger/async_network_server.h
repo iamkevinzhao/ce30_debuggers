@@ -16,6 +16,9 @@ public:
   MessageReport AsyncSend(const QString& message) override;
   std::vector<MessageReport> AsyncReceive() override;
   bool Shut() override;
+  bool SetInMessageEnqueueJudgeToDefault();
+  bool SetInMessageEnqueueJudge(
+      std::function<bool(const MessageReport&)> function);
 protected:
   virtual bool InitializeSocket() = 0;
   virtual bool SocketSend(const MessageReport& report) = 0;
@@ -33,6 +36,8 @@ private:
 
   std::mutex report_queue_in_mutex_;
   std::queue<MessageReport> report_queue_in_;
+
+  std::function<bool(const MessageReport&)> in_message_enqueue_judge_;
 };
 
 #endif // ASYNC_NETWORK_SERVER_H
