@@ -2,10 +2,11 @@
 #define MAIN_WINDOW_H
 
 #include <QMainWindow>
-#include "abstract_socket.h"
+#include "async_network_server.h"
 #include <memory>
 #include "text_sender.h"
 #include "text_receiver.h"
+#include "incoming_packet_sampler.h"
 
 namespace Ui {
   class MainWindow;
@@ -38,10 +39,11 @@ private:
   void SetUISocketOptionTCP();
   void SetUISocketOptionUDP();
   Ui::MainWindow *ui;
-  std::shared_ptr<AbstractSocket> socket_;
+  std::shared_ptr<AsyncNetworkServer> socket_;
   std::shared_ptr<TextSender> text_sender_;
   std::shared_ptr<TextReceiver> text_receiver_;
   int timer_id_;
+  std::shared_ptr<IncomingPacketSampler> sampler_;
 };
 
 #endif // MAIN_WINDOW_H

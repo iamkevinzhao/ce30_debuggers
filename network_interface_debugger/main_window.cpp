@@ -11,12 +11,14 @@ using namespace std;
 
 const QString kWarnDialogTitle = "Warn";
 const QString kErrorDialogTitle = "Error";
+const QString kInfoDialogTitle = "Info";
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
 {
   ui->setupUi(this);
+  sampler_.reset(new IncomingPacketSampler);
   SetUISocketOptionUDP();
   SetSocketFromUI();
   text_sender_.reset(new TextSender);
@@ -66,12 +68,14 @@ void MainWindow::SetSocketFromUI() {
     }
     socket_.reset(new UDPSocket);
     socket_->Initialize();
+    sampler_->SetNetworkServer(socket_);
   } else if (ui->UDPCheckBox->isChecked()) {
     if (socket_) {
       socket_->Shut();
     }
     socket_.reset(new UDPSocket);
     socket_->Initialize();
+    sampler_->SetNetworkServer(socket_);
   } else {
     QMessageBox::critical(
         this, kErrorDialogTitle,
@@ -83,6 +87,7 @@ void MainWindow::SetSocketFromUI() {
     }
     socket_.reset(new UDPSocket);
     socket_->Initialize();
+    sampler_->SetNetworkServer(socket_);
   }
 }
 
@@ -104,8 +109,16 @@ void MainWindow::on_SendPushButton_clicked()
     cerr << "No socket has been established." << endl;
     QApplication::exit(-1);
   }
+  auto command = text_sender_->GetMessageString();
+  if (sampler_->InspectCommand(command)) {
+    QMessageBox::information(
+        this, kInfoDialogTitle,
+        "The command can cause packet overflow, "
+        "receiving frequency has been decreased to " +
+        QString::number(sampler_->Frequency()) + " Hz.");
+  }
   text_sender_->DisplayMessageReport(
-      socket_->AsyncSend(text_sender_->GetMessageString()));
+      socket_->AsyncSend(command));
 }
 
 void MainWindow::on_WrapMessageCheckBox_clicked(bool checked)

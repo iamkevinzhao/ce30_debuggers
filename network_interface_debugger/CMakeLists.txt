@@ -24,6 +24,8 @@ add_executable(
     text_receiver.cpp
     text_display.h
     text_display.cpp
+    incoming_packet_sampler.h
+    incoming_packet_sampler.cpp
 )
 
 target_link_libraries(
