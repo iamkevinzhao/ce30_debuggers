@@ -14,7 +14,7 @@ public:
   UDPSocket();
   ~UDPSocket();
   bool Initialize() override;
-  MessageReport Send(const QString& message) override;
+  MessageReport AsyncSend(const QString& message) override;
   std::vector<MessageReport> AsyncReceive() override;
 private:
   void InterfaceThread();
@@ -22,7 +22,6 @@ private:
 
   std::mutex send_datagram_mutex_;
   MessageReport send_datagram_;
-  std::condition_variable send_datagram_cond_;
 
   bool exit_signal_;
   std::unique_ptr<QUdpSocket> socket_;

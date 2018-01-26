@@ -1,21 +1,23 @@
 #ifndef TCP_SOCKET_H
 #define TCP_SOCKET_H
 
-#include "abstract_socket.h"
+#include "async_network_server.h"
 #include <memory>
 #include <QTcpSocket>
 #include <QTcpServer>
 
-class TCPSocket : public AbstractSocket
+class TCPSocket : public AsyncNetworkServer
 {
 public:
   TCPSocket();
   bool Initialize() override;
-  MessageReport Send(const QString& message) override;
-  std::vector<MessageReport> AsyncReceive() override;
+protected:
+  bool SocketReceive(MessageReport &report) override;
+  bool SocketSend(const MessageReport &report) override;
+  bool InitializeSocket() override;
 private:
-  std::unique_ptr<QTcpSocket> socket_;
-  std::unique_ptr<QTcpSocket> socket_receive_;
+  std::unique_ptr<QTcpSocket> socket_send_;
+  QTcpSocket* socket_receive_;
   std::unique_ptr<QTcpServer> server_;
 };
 

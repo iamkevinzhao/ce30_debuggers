@@ -93,7 +93,7 @@ void MainWindow::on_SendPushButton_clicked()
     QApplication::exit(-1);
   }
   text_sender_->DisplayMessageReport(
-      socket_->Send(text_sender_->GetMessageString()));
+      socket_->AsyncSend(text_sender_->GetMessageString()));
 }
 
 void MainWindow::on_WrapMessageCheckBox_clicked(bool checked)

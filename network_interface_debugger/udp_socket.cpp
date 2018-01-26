@@ -21,7 +21,7 @@ bool UDPSocket::Initialize() {
   return true;
 }
 
-MessageReport UDPSocket::Send(const QString &message) {
+MessageReport UDPSocket::AsyncSend(const QString &message) {
   MessageReport report;
   report.message = message.toLocal8Bit();
   report.stamp = QTime::currentTime();

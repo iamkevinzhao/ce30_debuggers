@@ -12,6 +12,8 @@ add_executable(
     main_window.ui
     abstract_socket.h
     abstract_socket.cpp
+    async_network_server.h
+    async_network_server.cpp
     udp_socket.h
     udp_socket.cpp
     tcp_socket.h
