@@ -60,6 +60,19 @@ void MainWindow::SetUISocketOptionUDP() {
   ui->UDPCheckBox->setChecked(true);
 }
 
+QString MainWindow::GetIPStringFromUI() {
+  return
+      ui->IPLineEdit1->text() + "." +
+      ui->IPLineEdit2->text() + "." +
+      ui->IPLineEdit3->text() + "." +
+      ui->IPLineEdit4->text();
+}
+
+quint16 MainWindow::GetPortFromUI() {
+  return
+    ui->PortLineEdit->text().toInt();
+}
+
 void MainWindow::SetSocketFromUI() {
   // socket_.reset();
   if (ui->TCPCheckBox->isChecked()) {
@@ -67,6 +80,8 @@ void MainWindow::SetSocketFromUI() {
       socket_->Shut();
     }
     socket_.reset(new UDPSocket);
+    socket_->SetIP(GetIPStringFromUI());
+    socket_->SetPort(GetPortFromUI());
     socket_->Initialize();
     sampler_->SetNetworkServer(socket_);
   } else if (ui->UDPCheckBox->isChecked()) {
@@ -74,6 +89,8 @@ void MainWindow::SetSocketFromUI() {
       socket_->Shut();
     }
     socket_.reset(new UDPSocket);
+    socket_->SetIP(GetIPStringFromUI());
+    socket_->SetPort(GetPortFromUI());
     socket_->Initialize();
     sampler_->SetNetworkServer(socket_);
   } else {

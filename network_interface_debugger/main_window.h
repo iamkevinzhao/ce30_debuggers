@@ -35,6 +35,8 @@ private slots:
   void on_WrapMessagePushButton_clicked();
 
 private:
+  QString GetIPStringFromUI();
+  quint16 GetPortFromUI();
   void SetSocketFromUI();
   void SetUISocketOptionTCP();
   void SetUISocketOptionUDP();

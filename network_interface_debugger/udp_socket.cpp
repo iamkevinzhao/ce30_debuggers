@@ -45,6 +45,8 @@ bool UDPSocket::SocketReceive(MessageReport &report) {
 }
 
 bool UDPSocket::InitializeSocket() {
+  address_.setAddress(GetIP());
+  port_ = GetPort();
   socket_.reset(new QUdpSocket);
   socket_->bind(QHostAddress::Any, port_);
   return true;
