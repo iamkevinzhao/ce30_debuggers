@@ -5,6 +5,7 @@
 #include <QTime>
 #include <vector>
 #include <QHostAddress>
+#include <QObject>
 
 struct MessageReport {
   QTime stamp;
@@ -12,8 +13,9 @@ struct MessageReport {
   bool success;
 };
 
-class AbstractSocket
+class AbstractSocket : public QObject
 {
+  Q_OBJECT
 public:
   AbstractSocket();
   virtual ~AbstractSocket();

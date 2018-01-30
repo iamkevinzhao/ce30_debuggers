@@ -6,9 +6,11 @@
 #include <thread>
 #include <mutex>
 #include <queue>
+#include <QObject>
 
 class AsyncNetworkServer : public AbstractSocket
 {
+  Q_OBJECT
 public:
   AsyncNetworkServer();
   virtual ~AsyncNetworkServer();
@@ -20,6 +22,7 @@ public:
   bool SetInMessageEnqueueJudge(
       std::function<bool(const MessageReport&)> function);
 protected:
+  bool ShouldEnqueueMessage(const MessageReport& report);
   virtual bool InitializeSocket() = 0;
   virtual bool SocketSend(const MessageReport& report) = 0;
   virtual bool SocketReceive(MessageReport& report) = 0;

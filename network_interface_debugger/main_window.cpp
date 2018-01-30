@@ -79,7 +79,7 @@ void MainWindow::SetSocketFromUI() {
     if (socket_) {
       socket_->Shut();
     }
-    socket_.reset(new UDPSocket);
+    socket_.reset(new TCPSocket);
     socket_->SetIP(GetIPStringFromUI());
     socket_->SetPort(GetPortFromUI());
     socket_->Initialize();
@@ -111,12 +111,14 @@ void MainWindow::SetSocketFromUI() {
 void MainWindow::on_TCPCheckBox_clicked()
 {
   ui->UDPCheckBox->setChecked(!ui->TCPCheckBox->isChecked());
+  ui->PortLineEdit->setText("50660");
   SetSocketFromUI();
 }
 
 void MainWindow::on_UDPCheckBox_clicked()
 {
   ui->TCPCheckBox->setChecked(!ui->UDPCheckBox->isChecked());
+  ui->PortLineEdit->setText("2368");
   SetSocketFromUI();
 }
 

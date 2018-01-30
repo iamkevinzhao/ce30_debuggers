@@ -4,21 +4,26 @@
 #include "async_network_server.h"
 #include <memory>
 #include <QTcpSocket>
-#include <QTcpServer>
 
 class TCPSocket : public AsyncNetworkServer
 {
+  Q_OBJECT
 public:
   TCPSocket();
+  ~TCPSocket();
   bool Initialize() override;
+  MessageReport AsyncSend(const QString& message) override;
+  std::vector<MessageReport> AsyncReceive() override;
+  bool Shut() override;
 protected:
   bool SocketReceive(MessageReport &report) override;
   bool SocketSend(const MessageReport &report) override;
   bool InitializeSocket() override;
+public slots:
+  void ReadyRead();
 private:
-  std::unique_ptr<QTcpSocket> socket_send_;
-  QTcpSocket* socket_receive_;
-  std::unique_ptr<QTcpServer> server_;
+  QTcpSocket* socket_;
+  std::vector<MessageReport> report_cache_;
 };
 
 #endif // TCP_SOCKET_H

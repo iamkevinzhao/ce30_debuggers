@@ -37,9 +37,13 @@ bool AsyncNetworkServer::SetInMessageEnqueueJudge(
   return true;
 }
 
+bool AsyncNetworkServer::ShouldEnqueueMessage(const MessageReport &report) {
+  return in_message_enqueue_judge_(report);
+}
+
 bool AsyncNetworkServer::Initialize() {
   if (!thread_) {
-    thread_.reset(new thread(&AsyncNetworkServer::BackgroudThread, this));
+    thread_.reset(new std::thread(&AsyncNetworkServer::BackgroudThread, this));
   } else {
     return false;
   }

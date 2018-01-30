@@ -1,6 +1,7 @@
 #include "abstract_socket.h"
 
-AbstractSocket::AbstractSocket() : ip_("192.168.1.80"), port_(2368)
+AbstractSocket::AbstractSocket()
+  : ip_("192.168.1.80"), port_(2368), QObject(nullptr)
 {
 
 }
