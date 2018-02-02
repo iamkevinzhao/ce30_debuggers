@@ -84,9 +84,6 @@ void MainWindow::SetSocketFromUI() {
     socket_->Initialize();
     sampler_->SetNetworkServer(socket_);
   } else if (ui->UDPCheckBox->isChecked()) {
-    if (socket_) {
-      socket_->Shut();
-    }
     socket_.reset(new UDPSocket);
     socket_->SetIP(GetIPStringFromUI());
     socket_->SetPort(GetPortFromUI());
