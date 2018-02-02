@@ -74,11 +74,10 @@ quint16 MainWindow::GetPortFromUI() {
 }
 
 void MainWindow::SetSocketFromUI() {
-  // socket_.reset();
+  if (socket_) {
+    socket_->Shut();
+  }
   if (ui->TCPCheckBox->isChecked()) {
-    if (socket_) {
-      socket_->Shut();
-    }
     socket_.reset(new TCPSocket);
     socket_->SetIP(GetIPStringFromUI());
     socket_->SetPort(GetPortFromUI());
@@ -149,4 +148,9 @@ void MainWindow::on_WrapMessageCheckBox_clicked(bool checked)
 void MainWindow::on_WrapMessagePushButton_clicked()
 {
   text_sender_->WrapMessageNow();
+}
+
+void MainWindow::on_IPPortApplyPushButton_clicked()
+{
+  SetSocketFromUI();
 }

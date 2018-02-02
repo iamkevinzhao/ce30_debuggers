@@ -34,6 +34,8 @@ private slots:
 
   void on_WrapMessagePushButton_clicked();
 
+  void on_IPPortApplyPushButton_clicked();
+
 private:
   QString GetIPStringFromUI();
   quint16 GetPortFromUI();
